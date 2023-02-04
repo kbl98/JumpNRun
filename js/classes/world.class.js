@@ -4,9 +4,10 @@ class World{
         new Enemy(), new Enemy(),new Enemy()
     ];
     bg=new Bg1();
-    bg_obj=[new BackgroundObject("../BattleOfHeroes/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer01.png",1000),
-            new BackgroundObject("../BattleOfHeroes/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer02.png",600),
-            new BackgroundObject("../BattleOfHeroes/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer03.png",300)]
+    bg_obj=[new BackgroundObject("../BattleOfHeroes/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer04.png",720,480),
+            new BackgroundObject("../BattleOfHeroes/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer03.png",720,380),
+            new BackgroundObject("../BattleOfHeroes/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer02.png",720,410),
+            new BackgroundObject("../BattleOfHeroes/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer01.png",720,120)]
    
    
    
@@ -46,6 +47,7 @@ class World{
     forEachToMap(array){
         array.forEach(e=>{
             this.addToMap(e)
+            
         })
 
     }
