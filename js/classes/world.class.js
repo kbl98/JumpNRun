@@ -1,47 +1,54 @@
 class World{
+    camera_x=0;
+    camera_y=0;
     character=new Character();
-    enemies=[
-        new Enemy(), new Enemy(),new Enemy()
-    ];
-    bg=new Bg1();
-    bg_obj=[new BackgroundObject("../BattleOfHeroes/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer04.png",720,480),
-            new BackgroundObject("../BattleOfHeroes/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer03.png",720,380),
-            new BackgroundObject("../BattleOfHeroes/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer02.png",720,410),
-            new BackgroundObject("../BattleOfHeroes/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer01.png",720,120)]
+   // enemies=level_1.enemies;
+    /*bg=new Bg1();
+    bg_obj=level_1.backgrounds;*/
+
+    level=level_1
    
    
    
             
 
 
-    clouds=[
-        new Cloud(),
-        new Cloud(),
-        new Cloud()
-    ];
+    //clouds=level_1.clouds;
 
     canvas;
     ctx;
-    constructor(canvas){
+    keyboard;
+
+    constructor(canvas,keyboard){
         this.canvas=canvas;
         this.ctx = this.canvas.getContext('2d');
-
+        this.keyboard=keyboard;
+        this.setWorld();
         this.draw();
  }
+
+    setWorld(){
+        this.character.world=this;
+        
+    }
+
     draw(){
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-        this.addToMap(this.bg);
+        this.ctx.translate(this.camera_x,this.camera_y);
+        //this.addToMap(this.bg);
        
-        this.forEachToMap(this.bg_obj);
-        this.forEachToMap(this.clouds);
+        this.forEachToMap(this.level.backgrounds);
+        this.forEachToMap(this.level.clouds);
 
         this.addToMap(this.character);
-        this.forEachToMap(this.enemies);
+        this.forEachToMap(this.level.enemies);
+
+        this.ctx.translate(-this.camera_x,this.camera_y);
         let self=this;
         requestAnimationFrame(function(){
             self.draw()
         })
- 
+        
     }
 
     forEachToMap(array){
@@ -52,7 +59,17 @@ class World{
 
     }
     addToMap(emt){
-        this.ctx.drawImage(emt.img,emt.x,emt.y,emt.width,emt.height)
+        if(emt.otherDirection==true){
+            this.ctx.save();
+            this.ctx.translate(emt.width+55,0);
+            this.ctx.scale(-1, 1);
+            emt.x=emt.x *-1;
+        }
+        this.ctx.drawImage(emt.img,emt.x,emt.y,emt.width,emt.height);
+        if(emt.otherDirection==true){
+            emt.x=emt.x *-1;
+            this.ctx.restore();
+        }
     }
 
 }
