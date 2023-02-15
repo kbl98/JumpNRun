@@ -1,8 +1,10 @@
 class Enemy extends MoveableObject{
-    height=150;
-    width=110;
-    y=230;
-    current_img=0;
+    height=70;
+    width=70;
+    y=310;
+    energy=5;
+    dead=false;
+    
    
 
 
@@ -62,9 +64,9 @@ IMGS_DEAD=["../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Characters/C
 
     constructor(){
         super().loadImg("../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Characters/Characters 04/Idle/Idle_00.png")
-        this.x=720+Math.random()*750;
+        this.x=720+Math.random()*4500;
         this.speed=0.35+Math.random()*0.45;
-       
+        this.loadImgs(this.IMGS_DEAD);
         this.loadImgs(this.IMGS_WALK_EY);
         this.animate()
         
@@ -75,14 +77,29 @@ IMGS_DEAD=["../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Characters/C
 
     animate(){
         setInterval(()=>{
+        if(this.dead==true){
+            this.dieEnemy();
+        }else{
         this.playAnimation(this.IMGS_WALK_EY);
         this.moveLeftMain();
         //let i=this.current_img % this.IMGS_WALK_EY.length;
         //let path=this.IMGS_WALK_EY[i];
         //this.img=this.imgcache[path];
         //this.current_img++
-        },1000/60
+        }},1000/60
         )
+    }
+
+    dieEnemy(){
+        this.playAnimationOnce(this.IMGS_DEAD);
+        this.removeEnemy();
+    }
+
+    removeEnemy(){
+        if(this.dead==true){
+       this.y+=6000;
+    }
+
     }
 
 

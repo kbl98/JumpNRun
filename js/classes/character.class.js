@@ -1,9 +1,12 @@
 class Character extends MoveableObject{
-    height=120;
+    height=130;
     width=110;
-    current_img=0;
     sound_walk=new Audio("../audio/walk.mp3")
     speed=10;
+    energy=100;
+    dead=false;
+    ball;
+    
 
     
 
@@ -167,6 +170,9 @@ world;
         super().loadImg("../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_0.png");
         this.loadImgs(this.IMGS_WALK);
         this.loadImgs(this.IMGS_JUMP);
+        this.loadImgs(this.IMGS_DIE);
+        this.loadImgs(this.IMGS_GETHIT);
+        this.loadImgs(this.IMGS_CELEBRATES);
         this.aplyGravity();
         this.animate();
       
@@ -174,36 +180,79 @@ world;
 
 
 animate(){
+
+   
+
+
     setInterval(()=>{
         this.sound_walk.pause();
-        if(this.world.keyboard.RIGHT && this.x < level_1.level_end){
+        if(this.world.keyboard.RIGHT && this.x < level_1.level_end && this.dead==false){
             this.moveRight();
             this.sound_walk.play();
         }
 
-        if(this.world.keyboard.LEFT && this.x > 200){
+        if(this.world.keyboard.LEFT && this.x > 200 && this.dead==false){
             this.moveLeft();
             this.sound_walk.play();
         }
         
-        if(this.world.keyboard.UP && this.y>=270){
+        if(this.world.keyboard.UP && this.y>=270 && this.dead==false){
             this.jump();
         }
+
+        if(this.world.keyboard.DOWN && this.dead==false && this.hasBall()){
+             this.world.keyboard.DOWN=false;
+            this.ball=new Ball(this);
+            this.world.throw=true;
+            this.lessBall();}
+
+            
+        
 
         this.world.camera_x=-this.x +200;
         },1000/60
     )
 
+    
     setInterval(()=>{
-    if(this.isInAir()){
-            this.playAnimation(this.IMGS_JUMP)
-    }else{
-        if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT ){
+        if(this.world.level.endboss.dead==true){
+            this.playAnimation(this.IMGS_CELEBRATES);
+        }
+        else if(this.dead==true){
+            this.playAnimationOnce(this.IMGS_DIE);
+          }
+        else if(this.isHurt()){
+            this.playAnimation(this.IMGS_GETHIT)
+        }
+     else if(this.isInAir() && this.dead==false){
+            this.playAnimation(this.IMGS_JUMP)}
+            
+     else{       
+        if((this.world.keyboard.RIGHT && this.dead==false) || (this.world.keyboard.LEFT && this.dead==false)){
             this.playAnimation(this.IMGS_WALK)
-          }}},1000/20
+          }}},1000/30
         )
+
+    
     } 
+
+
+    hasBall(){
+        console.log(this.world.weaponbar.allbombs>0)
+        return this.world.weaponbar.allbombs>0;
     }
+
+    lessBall(){
+       this.world.weaponbar.allbombs-=1;
+        console.log(this.world.weaponbar.allbombs)
+        //if ( this.world.weaponbar.allbombs<1){
+          //  this.world.weaponbar.allbombs=0;
+       // }
+    }
+
+    }
+
+   
 
    /* playAnimation(images){
     let i=this.current_img % images.length;

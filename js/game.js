@@ -10,7 +10,6 @@ function init(){
 }
 
 window.addEventListener("keydown",(e)=>{
-    console.log(e)
     if(e.keyCode==40){
         keyboard.DOWN=true;
     }
@@ -30,7 +29,6 @@ window.addEventListener("keydown",(e)=>{
 )
 
 window.addEventListener("keyup",(e)=>{
-    console.log(e)
     if(e.keyCode==40){
         keyboard.DOWN=false;
     }
@@ -47,4 +45,6 @@ window.addEventListener("keyup",(e)=>{
         keyboard.SPACE=false;
     }
 }
+
+
 )

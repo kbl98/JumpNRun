@@ -1,8 +1,9 @@
 class Endboss extends MoveableObject{
 x=5950;
-current_img=0;
 speed=5;
 x=5950;
+energy=30;
+left=true;
 
 IMGS_WALK=["../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Characters/Characters 02/Walk/Walk_00.png",
 "../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Characters/Characters 02/Walk/Walk_01.png",
@@ -101,35 +102,51 @@ IMGS_ATTACK=["../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Characters
 
 constructor(){
     super().loadImg("../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Characters/Characters 02/Walk/Walk_00.png");
+    this.loadImgs(this.IMGS_ATTACK)
+    this.loadImgs(this.IMGS_Dead)
     this.height=300;
     this.width=280;
     this.y=130;
     this.x=5950;
-    this.move();
+   
     this.loadImgs(this.IMGS_WALK);
     this.animate()
 }
 
 animate(){
-    setInterval(()=>{   
+   setInterval(()=>{
+        if(!this.isDead()){
+    this.move();
+        }
+    },1000/60)
+
+    setInterval(()=>{  
+        if(this.isDead()){
+            this.playAnimationOnce(this.IMGS_Dead)
+        }
+        else if(this.isHurt()){ 
+            this.playAnimation(this.IMGS_ATTACK);
+            }else{ 
     this.playAnimation(this.IMGS_WALK);
-    },1000/20
+    }},1000/60
     )
+
+    
 }
 
 move(){
-    let left=true;
-    setInterval(()=>{ 
-    if(this.x>=4800 && this.x<5980 && left==true){
+
+    if(this.x>=4800 && this.x<5980 && this.left==true){
         this.moveLeftMain();
     }
     else{
+            this.left=false;
             this.moveRightMain();
-            left=false;
+            
             if(this.x>=5950){
-                left=true;
+                this.left=true;
             }
         }
-},1000/60)
+
 }
     }

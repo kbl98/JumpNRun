@@ -2,7 +2,7 @@
 
 const level_1=new Level(
     [
-        new Cloud()
+        new Cloud(),new Cloud, new Cloud, new Cloud
     ],
     [new BackgroundObject("../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer04.png",0,0,1000,480),
     new BackgroundObject("../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer03.png",0,220,1000,250),
@@ -48,7 +48,55 @@ const level_1=new Level(
     new BackgroundObject("../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Layer01.png",7992,350,1000,120),
     ],
     [
-        new Enemy(), new Enemy(),new Enemy(),new Endboss()
-    ]
+        new Enemy(), new Enemy(),new Enemy(),new Enemy, new Enemy, new Enemy, new Enemy, new Enemy
+    ],
+        new Endboss()
+    ,
+    [new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin()],
+        [
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+            new Bomb(),
+        ]
 
 )

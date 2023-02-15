@@ -1,6 +1,6 @@
-class MoveableObject{
+class MoveableObject extends DrawableObject{
     x=200;
-   
+    current_img=0;
     img;
     height=100;
     width=110;
@@ -9,32 +9,45 @@ class MoveableObject{
     speed;
     otherDirection=false;
     speedY=0;
-    acceleration=1.5;
+    acceleration=1.0;
+    energy;
+    hurt=false;
+    lastHit=0;
+    collidable=true;
+    dead=false;
+  
 
     aplyGravity(){
         setInterval(()=>
         {if(this.isInAir() || this.speedY>0){
             this.y-=this.speedY;
             this.speedY-=this.acceleration;
-        }},1000/25)
+        }},1000/40)
     }
 
     isInAir(){
-        return this.y<270
+        if(this instanceof Ball){
+            return true
+        } else{
+        return this.y <= 270
+    }
+    }
+    
+    
+
+   
+
+    flipImg(ctx){
+    ctx.save();
+    ctx.translate(this.width+55,0);
+    ctx.scale(-1, 1);
+            this.x=this.x *-1;
+
     }
 
-    loadImg(path){
-         this.img=new Image();
-        this.img.src=path;
-    }
-
-    loadImgs(arr){
-        arr.forEach(path=> {
-            let img=new Image();
-            img.src=path;
-         this.imgcache[path]=img;}
-        );
-
+    flipImgBack(ctx){
+        this.x=this.x *-1;
+        ctx.restore();
     }
 
     moveLeft(){
@@ -67,4 +80,59 @@ class MoveableObject{
         this.img=this.imgcache[path];
         this.current_img++
         }
+
+        playAnimationOnce(images){
+           for(let i=0;i<images.length;i++){
+            let path=images[i];
+            this.img=this.imgcache[path];
+           }
+            
+            }
+            
+    
+    hit(){
+        this.energy-=5;
+
+        if (this.energy<=0){
+            this.energy=0;
+        }else{
+        this.lastHit=new Date().getTime();
+        }
+    }
+
+    isColliding (obj) {
+         return this.x + this.width > obj.x && 
+         this.x<obj.x &&
+         this.y +this.height > obj.y && 
+         this.y < obj.y +obj.height 
+    }
+
+    isCollidingTop (obj) {
+        return this.x + this.width > obj.x && 
+        this.x<obj.x &&
+        this.y +this.height > obj.y && 
+        this.y < obj.y +obj.height 
+   }
+
+
+
+    isHurt(){
+       let timespan=new Date().getTime() - this.lastHit;
+        return timespan/1000 < 0.3;
+
+    }
+
+
+    isDead(){
+        return this.energy<=0;
+    }
+
+    checkDeath(){
+        if(this.isDead()){
+            this.dead=true;
+        }
+    }
+
+   
+
 }
