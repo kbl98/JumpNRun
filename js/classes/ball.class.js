@@ -4,6 +4,7 @@ class Ball extends MoveableObject{
     speed=10;
     speedY=20;
     world;
+    play=true
     constructor(character){
         
         super().loadImg("../BattleOfHeroes/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Projectile/4.png");
@@ -17,12 +18,13 @@ class Ball extends MoveableObject{
 
     throw(){
         setInterval(()=>{
+            if(this.play==true){
             if(this.otherDirection==false){
                 this.x+=this.speed;
             }else{
                 this.x-=this.speed;
             }
-        },1000/30)
+    }},1000/30)
     }
 
     

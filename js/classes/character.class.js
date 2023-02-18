@@ -1,265 +1,162 @@
-class Character extends MoveableObject{
-    height=130;
-    width=110;
-    sound_walk=new Audio("../audio/walk.mp3")
-    speed=10;
-    energy=100;
-    dead=false;
-    ball;
-    
+class Character extends MoveableObject {
+  height = 130;
+  width = 110;
+  sound_walk = new Audio("../audio/walk.mp3");
+  speed = 10;
+  energy = 100;
+  dead = false;
+  ball;
+  isCollectingBombs;
+  throw = false;
+  sound_jump = new Audio("../audio/jump.mp3");
+  sound_throw = new Audio("../audio/throw.mp3");
+  sound_win = new Audio("../audio/win.mp3");
+  sound_die = new Audio("../audio/die.mp3");
+  sound_hit = new Audio("../audio/hit.mp3");
+  sound_birds = new Audio("../audio/birds.mp3");
+  sound_hurt = new Audio("../audio/hurt.mp3");
+  sound_collect_weapon = new Audio("../audio/collect_weapon.mp3");
+  play=true;
 
-    
+  IMGS_IDLE = [
+    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_0.png",
+  ];
 
+  IMGS_WALK = character_walk
+  
 
+  IMGS_JUMP = character_jump;
 
-    IMGS_WALK=["../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_0.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_1.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_2.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_3.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_4.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_5.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_6.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_7.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_8.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_9.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_10.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_11.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_12.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_13.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_14.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_15.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_16.png",
-    "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_17.png"
-]
+  IMGS_HIT = character_hit;
 
-IMGS_JUMP=["../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Jump/Wukong-Jump_0.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Jump/Wukong-Jump_1.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Jump/Wukong-Jump_2.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Jump/Wukong-Jump_3.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Jump/Wukong-Jump_4.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Jump/Wukong-Jump_5.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Jump/Wukong-Jump_6.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Jump/Wukong-Jump_7.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Jump/Wukong-Jump_8.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Jump/Wukong-Jump_9.png",
-]
+  IMGS_GETHIT = character_gethit;
 
-IMGS_HIT=["../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_0.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_1.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_2.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_3.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_4.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_5.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_6.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_7.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_8.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_9.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_10.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_11.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_12.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_13.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_14.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_15.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_16.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_17.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_18.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_19.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_20.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Hit/Wukong-Hit_21.png"
-]
+  IMGS_DIE = character_die;
+  IMGS_THROW = character_throw;
 
-IMGS_GETHIT=["../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_0.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_1.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_2.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_3.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_4.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_5.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_6.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_7.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_8.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_9.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_10.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_11.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_12.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/GetHit/Wukong-GetHit_13.png"]
+  IMGS_CELEBRATES = character_celabrates;
 
-IMGS_DIE=["../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_0.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_1.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_2.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_3.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_4.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_5.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_6.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_7.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_8.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_9.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_10.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_11.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_12.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_13.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_14.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_15.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_16.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_17.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_18.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_19.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_20.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_21.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_22.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_23.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_24.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Die/Wukong-Death_25.png"]
+  IMGS_GLIDE = character_glide;
 
-IMGS_THROW=["../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_0.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_1.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_2.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_3.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_4.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_5.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_6.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_7.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_8.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_9.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_10.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_11.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_12.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_13.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_14.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_15.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_16.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_17.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_18.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_19.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Throw/Wukong-Throw_20.png"]
+  IMG_Fireball =
+    "../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Projectile/1.png";
 
-IMGS_CELEBRATES=["../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_0.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_1.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_2.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_3.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_4.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_5.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_6.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_7.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_8.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_9.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_10.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_11.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_12.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Celebrates/Wukong-Celebrates_13.png"]
+  //jump=new Imagecache(this.IMGS_JUMP);
+  //walk=new Imagecache(this.IMGS_WALK);
 
-IMGS_GLIDE=["../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Glide/Wukong-Glide_0.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Glide/Wukong-Glide_1.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Glide/Wukong-Glide_2.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Glide/Wukong-Glide_3.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Glide/Wukong-Glide_4.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Glide/Wukong-Glide_5.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Glide/Wukong-Glide_6.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Glide/Wukong-Glide_7.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Glide/Wukong-Glide_8.png",
-"../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Glide/Wukong-Glide_9.png"]
+  world;
 
+  constructor() {
+    super().loadImg(
+      "../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_0.png"
+    );
+    this.loadImgs(this.IMGS_WALK);
+    this.loadImgs(this.IMGS_JUMP);
+    this.loadImgs(this.IMGS_DIE);
+    this.loadImgs(this.IMGS_GETHIT);
+    this.loadImgs(this.IMGS_CELEBRATES);
+    this.loadImgs(this.IMGS_GLIDE);
+    this.loadImgs(this.IMGS_THROW);
+    this.loadImgs(this.IMGS_IDLE);
+    this.aplyGravity();
+    this.animate();
+  }
 
-IMG_Fireball="../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Projectile/1.png";
+  animate() {
+    setInterval(() => {
+        if(this.play==true){
+      this.sound_walk.pause();
+      if (
+        this.world.keyboard.RIGHT &&
+        this.x < level_1.level_end &&
+        this.dead == false
+      ) {
+        this.moveRight();
+        this.sound_walk.play();
+      }
 
-//jump=new Imagecache(this.IMGS_JUMP);
-//walk=new Imagecache(this.IMGS_WALK);
+      if (this.world.keyboard.LEFT && this.x > 200 && this.dead == false) {
+        this.moveLeft();
+        this.sound_walk.play();
+      }
 
-world;
+      if (this.world.keyboard.UP && this.y >= 270 && this.dead == false) {
+        this.jump();
+        this.sound_jump.play();
+      }
 
-    constructor(){
-        super().loadImg("../img/craftpix-net-546825-monkey-game-character-sprite/PNG/Walk/Wukong-Walk_0.png");
-        this.loadImgs(this.IMGS_WALK);
-        this.loadImgs(this.IMGS_JUMP);
-        this.loadImgs(this.IMGS_DIE);
-        this.loadImgs(this.IMGS_GETHIT);
-        this.loadImgs(this.IMGS_CELEBRATES);
-        this.aplyGravity();
-        this.animate();
-      
-    }
+      if (this.world.keyboard.SPACE && this.dead == false && this.hasBall()) {
+        this.world.keyboard.SPACE = false;
 
+        this.ball = new Ball(this);
+        this.throw = true;
+        this.lessBall();
+      }
 
-animate(){
+      if (this.world.keyboard.DOWN && this.dead == false) {
+        this.isCollectingBombs = true;
+      }
 
-   
+      this.world.camera_x = -this.x + 200;
+  }}, 1000 / 60);
 
+    setInterval(() => {
+        if(this.play==true){
+      if (
+        this.world.level.endboss.dead == true &&
+        this.world.level.endboss.isLyingDead()
+      ) {
+        this.playAnimation(this.IMGS_CELEBRATES);
+        this.sound_win.play();
+      } else if (this.dead == true && this.isLyingDead()) {
+        this.playAnimationOnce(this.IMGS_DIE);
+        this.sound_die.play();
+      } else if (
+        (this.dead == true && !this.isGameover()) ||
+        (this.world.level.endboss.dead == true &&
+          !this.world.level.endboss.isGameover())
+      ) {
+        this.world.end = true;
+        this.world.showStartscreen();
+      } else if (this.isHurt()) {
+        this.playAnimation(this.IMGS_GETHIT);
+      } else if (this.isInAir() && this.dead == false) {
+        this.playAnimation(this.IMGS_JUMP);
+      } else if (this.isCollectingBombs && this.world.keyboard.DOWN == true) {
+        this.playAnimation(this.IMGS_GLIDE);
+      } else if (this.throw == true) {
+        this.playAnimation(this.IMGS_THROW);
+        this.sound_throw.play();
+        this.throw = false;
+      } else if (
+        (this.world.keyboard.RIGHT && this.dead == false) ||
+        (this.world.keyboard.LEFT && this.dead == false)
+      ) {
+        this.playAnimation(this.IMGS_WALK);
+      } else {
+        this.playAnimation(this.IMGS_IDLE);
+        this.sound_birds.play();
+      }
+  }}, 1000 / 30);
+  }
 
-    setInterval(()=>{
-        this.sound_walk.pause();
-        if(this.world.keyboard.RIGHT && this.x < level_1.level_end && this.dead==false){
-            this.moveRight();
-            this.sound_walk.play();
-        }
+  hasBall() {
+    console.log(this.world.weaponbar.allbombs > 0);
+    return this.world.weaponbar.allbombs > 0;
+  }
 
-        if(this.world.keyboard.LEFT && this.x > 200 && this.dead==false){
-            this.moveLeft();
-            this.sound_walk.play();
-        }
-        
-        if(this.world.keyboard.UP && this.y>=270 && this.dead==false){
-            this.jump();
-        }
+  lessBall() {
+    this.world.weaponbar.allbombs -= 1;
+    console.log(this.world.weaponbar.allbombs);
+    //if ( this.world.weaponbar.allbombs<1){
+    //  this.world.weaponbar.allbombs=0;
+    // }
+  }
+}
 
-        if(this.world.keyboard.DOWN && this.dead==false && this.hasBall()){
-             this.world.keyboard.DOWN=false;
-            this.ball=new Ball(this);
-            this.world.throw=true;
-            this.lessBall();}
-
-            
-        
-
-        this.world.camera_x=-this.x +200;
-        },1000/60
-    )
-
-    
-    setInterval(()=>{
-        if(this.world.level.endboss.dead==true){
-            this.playAnimation(this.IMGS_CELEBRATES);
-        }
-        else if(this.dead==true){
-            this.playAnimationOnce(this.IMGS_DIE);
-          }
-        else if(this.isHurt()){
-            this.playAnimation(this.IMGS_GETHIT)
-        }
-     else if(this.isInAir() && this.dead==false){
-            this.playAnimation(this.IMGS_JUMP)}
-            
-     else{       
-        if((this.world.keyboard.RIGHT && this.dead==false) || (this.world.keyboard.LEFT && this.dead==false)){
-            this.playAnimation(this.IMGS_WALK)
-          }}},1000/30
-        )
-
-    
-    } 
-
-
-    hasBall(){
-        console.log(this.world.weaponbar.allbombs>0)
-        return this.world.weaponbar.allbombs>0;
-    }
-
-    lessBall(){
-       this.world.weaponbar.allbombs-=1;
-        console.log(this.world.weaponbar.allbombs)
-        //if ( this.world.weaponbar.allbombs<1){
-          //  this.world.weaponbar.allbombs=0;
-       // }
-    }
-
-    }
-
-   
-
-   /* playAnimation(images){
+/* playAnimation(images){
     let i=this.current_img % images.length;
     let path=images[i];
     this.img=this.imgcache[path];
     this.current_img++
     }*/
-    
-
-

@@ -4,6 +4,8 @@ class Enemy extends MoveableObject{
     y=310;
     energy=5;
     dead=false;
+    sound_hit=new Audio("../audio/hit_enemy.mp3");
+    play=true;
     
    
 
@@ -77,6 +79,7 @@ IMGS_DEAD=["../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Characters/C
 
     animate(){
         setInterval(()=>{
+            if(this.play==true){
         if(this.dead==true){
             this.dieEnemy();
         }else{
@@ -86,7 +89,7 @@ IMGS_DEAD=["../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Characters/C
         //let path=this.IMGS_WALK_EY[i];
         //this.img=this.imgcache[path];
         //this.current_img++
-        }},1000/60
+        }}},1000/60
         )
     }
 

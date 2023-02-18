@@ -1,16 +1,23 @@
-class Coin extends MoveableObject{
-    x=150+Math.random()*4000;
-    y=100+Math.random()*100;
-    width=80;
-    height=80;
-   
+class Coin extends MoveableObject {
+  width = 80;
+  height = 80;
+  sound = new Audio("../audio/collect.mp3");
 
-    constructor(){
-            super().loadImg("../img/img 4/8_coin/coin_1.png");
-    }
 
-    removeCoin(){
-        this.y=6000
-    }
+  constructor(x, y) {
+    super().loadImg("../img/img 4/8_coin/coin_1.png");
+    this.x = x;
+    this.y = y;
+    this.animate();
+  }
 
+  removeCoin() {
+    this.y = 6000;
+  }
+
+  animate(){
+    setInterval(()=>{
+      this.width=this.width + Math.random()*5 - Math.random()*5;
+    },1000/10)
+  }
 }

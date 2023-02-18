@@ -2,29 +2,21 @@ class World {
   camera_x = 0;
   camera_y = 0;
   character = new Character();
-  // enemies=level_1.enemies;
-  /*bg=new Bg1();
-    bg_obj=level_1.backgrounds;*/
-  throw = true;
   level = level_1;
   // ball=new Ball(this.character)
   number_bombs = 0;
   number_coins = 0;
-  ball = new Ball(this.character);
+  ball;
   run = true;
-
-  //clouds=level_1.clouds;
-
+  end = false;
   canvas;
   ctx;
   keyboard;
   statusbar = new Statusbar();
   coinbar = new Coinbar();
   weaponbar = new Weaponbar();
-
-  //coins=
-
-  //bombs=
+  endscreen = new Endscreen();
+  play=true;
 
   constructor(canvas, keyboard) {
     this.canvas = canvas;
@@ -37,6 +29,7 @@ class World {
     this.writeStatusbar();
     this.writeCoinbar();
     this.writeWeaponbar();
+    this.pauseGame();
   }
 
   setWorld() {
@@ -45,20 +38,28 @@ class World {
 
   runGame() {
     setInterval(() => {
+      if(this.play==true){
       this.checkCollision();
-    }, 1000/60);
+    }}, 1000 / 60);
   }
 
   checkCollision() {
     this.level.coins.forEach((coin) => {
       if (this.character.isColliding(coin)) {
         this.countCoins();
+        coin.sound.play();
         coin.removeCoin();
       }
     });
 
     this.level.bombs.forEach((bomb) => {
-      if (this.character.isColliding(bomb)) {
+      if (
+        this.character.isColliding(bomb) &&
+        this.character.isCollectingBombs == true &&
+        this.keyboard.DOWN == true
+      ) {
+        this.character.isCollectingBombs = false;
+        this.character.sound_collect_weapon.play();
         this.countBombs();
         bomb.removeBomb();
       }
@@ -68,38 +69,38 @@ class World {
       if (this.character.isColliding(enemy)) {
         if (this.fromAbove(enemy)) {
           enemy.hit();
+          enemy.sound_hit.play();
           this.character.y = 100;
           enemy.checkDeath();
         } else if (!this.character.isHurt()) {
           this.character.hit();
+          this.character.sound_hurt.play();
           this.character.checkDeath();
         }
       }
     });
 
-    //this.level.endboss.forEach((endboss) => {
-      if (this.character.ball) {
-        if (this.character.ball.isColliding(this.level.endboss) && !this.level.endboss.isHurt()) {
-          this.level.endboss.hit();
-          console.log(this.level.endboss.energy);
-          this.level.endboss.checkDeath();
-        }
+    if (this.character.ball) {
+      if (
+        this.character.ball.isColliding(this.level.endboss) &&
+        !this.level.endboss.isHurt()
+      ) {
+        this.level.endboss.hit();
+        this.level.endboss.sound_hit.play();
+        this.level.endboss.checkDeath();
       }
+    }
 
-      if (this.character.isColliding(this.level.endboss)) {
-        if (!this.character.isHurt()){
+    if (this.character.isColliding(this.level.endboss)) {
+      if (!this.character.isHurt()) {
         this.character.hit();
         this.character.checkDeath();
-    }
       }
-      // else if (this.character.collidable==true){
-      //  this.character.hit();
-      //   this.character.checkDeath();
-   // });
+    }
   }
 
   fromAbove(enemy) {
-    if (this.character.speedY < 0 && this.character.y +50 < enemy.y) {
+    if (this.character.speedY < 0 && this.character.y + 50 < enemy.y) {
       return true;
     }
   }
@@ -113,8 +114,8 @@ class World {
 
   //characterDead() {
   //  this.character
-   //   .animate()
-    //  .this.character.playAnimation(this.character.IMGS_DIE);
+  //   .animate()
+  //  .this.character.playAnimation(this.character.IMGS_DIE);
   //}
 
   draw() {
@@ -131,7 +132,10 @@ class World {
     this.addToMap(this.coinbar);
     this.addToMap(this.weaponbar);
     this.weaponbar.drawBall(this.ctx);
-
+    if (this.character.isGameover() || this.level.endboss.isGameover()) {
+      console.log("Endscreen");
+      this.addToMap(this.endscreen);
+    }
     this.ctx.translate(this.camera_x, this.camera_y);
     this.forEachToMap(this.level.bombs);
     this.forEachToMap(this.level.coins);
@@ -191,5 +195,27 @@ class World {
 
   countBombs() {
     this.weaponbar.allbombs += 1;
+  }
+
+  showStartscreen() {
+    window.location.href = "../index.html";
+  }
+
+  pauseGame(){
+    setInterval(()=>{if(this.play==false){
+      this.character.play=false;
+      this.level.enemies.forEach((enemy)=>{
+        enemy.play=false;
+      })
+      
+      this.level.endboss.play=false;
+  }else{
+    this.character.play=true;
+    this.level.enemies.forEach((enemy)=>{
+      enemy.play=true;
+    })
+    this.level.endboss.play=true;
+  }},1000/60)
+    
   }
 }

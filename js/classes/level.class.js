@@ -5,7 +5,8 @@ class Level{
     endboss;
     coins;
     bombs;
-    level_end=5900;
+    level_end=7000;
+    level_imgs;
 
     constructor(clouds,backgrounds,enemies,endboss,coins,bombs){
         this.enemies=enemies;
@@ -15,4 +16,5 @@ class Level{
         this.coins=coins;
         this.bombs=bombs;
     }
+
 }
