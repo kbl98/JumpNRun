@@ -17,7 +17,7 @@ class Coin extends MoveableObject {
 
   animate(){
     setInterval(()=>{
-      this.width=this.width + Math.random()*5 - Math.random()*5;
+      this.width=this.width + Math.random()*1 - Math.random()*1;
     },1000/10)
   }
 }

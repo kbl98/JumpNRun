@@ -27,7 +27,7 @@ class MoveableObject extends DrawableObject {
   }
 
   isInAir() {
-    if (this instanceof Ball) {
+    if (this instanceof Ball || this instanceof EndbossWeapon){
       return true;
     } else {
       return this.y <= 270;

@@ -1,8 +1,8 @@
 class Weaponbar extends DrawableObject {
-  y = 0;
-  height = 40;
-  width = 150;
-  x = 400;
+  y = 20;
+  height = 18;
+  width = 18;
+  x = 295;
   allbombs = 0;
 
   images = [
@@ -16,9 +16,9 @@ class Weaponbar extends DrawableObject {
   ];
 
   constructor() {
-    super().loadImgs(this.images);
-    this.loadImg(
-      "../img/img 4/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png"
+    //super().loadImgs(this.images);
+    super().loadImg(
+        "../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Projectile/4.png"
     );
   }
 

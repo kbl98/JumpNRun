@@ -29,7 +29,9 @@ class DrawableObject {
       this instanceof Character ||
       this instanceof Enemy ||
       this instanceof Endboss ||
-      this instanceof Ball
+      this instanceof Ball ||
+      this instanceof EndbossWeapon
+
     ) {
       ctx.beginPath();
       ctx.linewidth = "5";

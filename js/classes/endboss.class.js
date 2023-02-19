@@ -6,6 +6,7 @@ class Endboss extends MoveableObject {
   left = true;
   sound_hit = new Audio("../audio/endboss_hurt.mp3");
   play=true;
+  weapon;
 
   IMGS_WALK = [
     "../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Characters/Characters 02/Walk/Walk_00.png",
@@ -115,6 +116,7 @@ class Endboss extends MoveableObject {
 
     this.loadImgs(this.IMGS_WALK);
     this.animate();
+    this.hasBall();
   }
 
   animate() {
@@ -149,5 +151,11 @@ class Endboss extends MoveableObject {
         this.left = true;
       }
     }
+  }
+
+  hasBall(){
+    setInterval(()=>{
+        this.weapon=new EndbossWeapon(this);
+    },2000)
   }
 }

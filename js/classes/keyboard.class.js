@@ -5,11 +5,13 @@ class Keyboard{
     UP=false;
     DOWN=false;
     SPACE=false;
-    
+    PAUSE=false;
+    PLAY=true;
 
 
 
 
+ 
 
 
 }

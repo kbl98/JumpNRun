@@ -6,6 +6,7 @@ class Character extends MoveableObject {
   energy = 100;
   dead = false;
   ball;
+  balls=[];
   isCollectingBombs;
   throw = false;
   sound_jump = new Audio("../audio/jump.mp3");
@@ -87,8 +88,12 @@ class Character extends MoveableObject {
 
       if (this.world.keyboard.SPACE && this.dead == false && this.hasBall()) {
         this.world.keyboard.SPACE = false;
-
+        this.world.keyboard.LEFT=false;
+        this.world.keyboard.RIGHT=false
         this.ball = new Ball(this);
+        this.balls.push(new Ball(this))
+
+
         this.throw = true;
         this.lessBall();
       }
@@ -153,6 +158,8 @@ class Character extends MoveableObject {
     // }
   }
 }
+
+
 
 /* playAnimation(images){
     let i=this.current_img % images.length;

@@ -21,15 +21,18 @@ class World {
   constructor(canvas, keyboard) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
+    this.ctx.font= '200 20px DripOctober-vm0JA';
+    this.ctx.fillStyle="green";
     this.keyboard = keyboard;
     this.setWorld();
     console.log(statusbar);
     this.draw();
     this.runGame();
     this.writeStatusbar();
-    this.writeCoinbar();
-    this.writeWeaponbar();
+    //this.writeCoinbar();
+    //this.writeWeaponbar();
     this.pauseGame();
+    this.setPlay()
   }
 
   setWorld() {
@@ -85,18 +88,24 @@ class World {
         this.character.ball.isColliding(this.level.endboss) &&
         !this.level.endboss.isHurt()
       ) {
+        this.character.ball.x= this.getBounce();
         this.level.endboss.hit();
         this.level.endboss.sound_hit.play();
         this.level.endboss.checkDeath();
       }
     }
 
-    if (this.character.isColliding(this.level.endboss)) {
+    if (this.character.isColliding(this.level.endboss) || this.character.isColliding(this.level.endboss.weapon)) {
       if (!this.character.isHurt()) {
         this.character.hit();
         this.character.checkDeath();
       }
     }
+  }
+
+  getBounce(){
+    this.character.x-=10;
+    this.character.y-=20
   }
 
   fromAbove(enemy) {
@@ -131,11 +140,15 @@ class World {
     this.addToMap(this.statusbar);
     this.addToMap(this.coinbar);
     this.addToMap(this.weaponbar);
-    this.weaponbar.drawBall(this.ctx);
+    //this.weaponbar.drawBall(this.ctx);
     if (this.character.isGameover() || this.level.endboss.isGameover()) {
       console.log("Endscreen");
       this.addToMap(this.endscreen);
     }
+    this.ctx.fillStyle="yellow";
+    this.ctx.fillText(this.coinbar.allcoins,230,35)
+    this.ctx.fillStyle="gray";
+    this.ctx.fillText(this.weaponbar.allbombs,320,35)
     this.ctx.translate(this.camera_x, this.camera_y);
     this.forEachToMap(this.level.bombs);
     this.forEachToMap(this.level.coins);
@@ -145,7 +158,13 @@ class World {
     if (this.character.ball) {
       this.addToMap(this.character.ball);
     }
-
+    if (this.character.balls) {
+      this.forEachToMap(this.character.balls);
+    }
+    if (this.level.endboss.weapon) {
+      this.addToMap(this.level.endboss.weapon);
+    }
+    
     this.ctx.translate(-this.camera_x, this.camera_y);
     let self = this;
     requestAnimationFrame(function () {
@@ -182,6 +201,7 @@ class World {
     }, 1000 / 60);
   }
 
+
   writeStatusbar() {
     setInterval(() => {
       this.statusbar.persentage = this.character.energy;
@@ -217,5 +237,15 @@ class World {
     this.level.endboss.play=true;
   }},1000/60)
     
+  }
+
+  setPlay(){
+    setInterval(()=>{
+if(this.keyboard.PAUSE==true){
+  this.play=false;
+}else{
+  this.play=true;
+}
+    },1000/60)
   }
 }

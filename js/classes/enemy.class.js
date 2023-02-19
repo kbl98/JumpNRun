@@ -66,7 +66,7 @@ IMGS_DEAD=["../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Characters/C
 
     constructor(){
         super().loadImg("../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Characters/Characters 04/Idle/Idle_00.png")
-        this.x=720+Math.random()*4500;
+        this.x=1020+Math.random()*4500;
         this.speed=0.35+Math.random()*0.45;
         this.loadImgs(this.IMGS_DEAD);
         this.loadImgs(this.IMGS_WALK_EY);

@@ -19,6 +19,7 @@ body{
     background-image: url("../img/background_start.png");
     font-family:'DripOctober-vm0JA' ;
     position: relative;
+    
 }
 
 canvas{
@@ -42,6 +43,7 @@ canvas{
     background-position-x:-230px ;
     background-repeat: no-repeat;
     background-image: url("../img/craftpix-891176-battle-of-heroes-2d-game-kit/Png/Stage Backgrounds/Background03/Sample.png");
+    
 }
 
 #monkey-img{
@@ -138,7 +140,7 @@ p{
 .cont-side{
     display: flex;
     justify-content: space-between;
-    width:100px;
+    width:20%;
     align-items: center;
 }
 
@@ -177,7 +179,14 @@ p{
     align-items: center;
 }
 
+#info-play{
+    position: absolute;
+    font-size:20px;
+    width:100%;
+    text-align: center;
+    bottom:30px;
 
+}
 
 
 @media only screen and (max-width:1020px){
